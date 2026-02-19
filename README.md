@@ -22,11 +22,6 @@ cd dev-env
 ./scripts/setup.sh
 ```
 
-This will:
-1. Install all development dependencies (tmux, clang, gcc, python, tree-sitter, ripgrep, etc.)
-2. Install the latest Neovim nightly release
-3. Install dotfiles (.bashrc, .bash_profile, .tmux.conf)
-
 ### Individual Components
 
 You can also run individual setup scripts:
