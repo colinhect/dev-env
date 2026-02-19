@@ -17,27 +17,22 @@ backup_if_exists() {
     fi
 }
 
-# Install .bashrc
-echo "Installing .bashrc..."
-backup_if_exists "$HOME/.bashrc"
-cp "$DOTFILES_DIR/.bashrc" "$HOME/.bashrc"
-
-# Install .bash_profile
-echo "Installing .bash_profile..."
-backup_if_exists "$HOME/.bash_profile"
-cp "$DOTFILES_DIR/.bash_profile" "$HOME/.bash_profile"
-
 # Install .tmux.conf
 echo "Installing .tmux.conf..."
 backup_if_exists "$HOME/.tmux.conf"
 cp "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 
+# Install Neovim configuration
+echo "Installing Neovim configuration..."
+mkdir -p "$HOME/.config/nvim"
+backup_if_exists "$HOME/.config/nvim/init.lua"
+cp "$DOTFILES_DIR/.config/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+
 echo ""
 echo "Dotfiles installed successfully!"
 echo ""
 echo "Installed files:"
-echo "  - ~/.bashrc"
-echo "  - ~/.bash_profile"
 echo "  - ~/.tmux.conf"
+echo "  - ~/.config/nvim/init.lua"
 echo ""
 echo "Run 'source ~/.bashrc' to apply bash changes in current shell"

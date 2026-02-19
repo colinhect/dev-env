@@ -104,23 +104,6 @@ Options:
 - Internet connection
 - Sudo access for system-wide installations
 
-## Directory Structure
-
-```
-dev-env/
-├── dotfiles/
-│   ├── .bashrc          # Bash configuration
-│   ├── .bash_profile    # Bash profile
-│   └── .tmux.conf       # tmux configuration
-├── scripts/
-│   ├── setup.sh               # Main setup script
-│   ├── install-dependencies.sh # Install dev tools
-│   ├── install-neovim.sh      # Install Neovim nightly
-│   ├── install-dotfiles.sh    # Install dotfiles
-│   └── setup-user.sh          # Create new user
-└── README.md
-```
-
 ## Post-Installation
 
 After running the setup:
@@ -139,14 +122,6 @@ After running the setup:
    ```bash
    nvim
    ```
-
-## Customization
-
-Feel free to modify the dotfiles and scripts to suit your preferences:
-
-- Edit dotfiles in the `dotfiles/` directory
-- Modify package lists in `scripts/install-dependencies.sh`
-- Adjust Neovim installation in `scripts/install-neovim.sh`
 
 ## License
 

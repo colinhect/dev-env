@@ -60,14 +60,3 @@ else
 fi
 
 echo "All development dependencies installed successfully!"
-echo ""
-echo "Installed packages:"
-echo "  - tmux"
-echo "  - clang, gcc, g++"
-echo "  - make, cmake"
-echo "  - git"
-echo "  - Python 3 + pip"
-echo "  - Node.js + npm"
-echo "  - ripgrep, fd-find, fzf"
-echo "  - tree-sitter"
-echo "  - Various utilities (htop, tree, wget, curl, etc.)"
