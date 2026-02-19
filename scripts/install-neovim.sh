@@ -27,21 +27,21 @@ cd "$TEMP_DIR"
 echo "Downloading latest Neovim nightly release..."
 
 # Download the latest nightly build
-NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
+NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
 if ! curl -fLO "$NVIM_URL"; then
     echo "Error: Failed to download Neovim from $NVIM_URL"
     exit 1
 fi
 
 echo "Extracting Neovim..."
-if ! tar xzf nvim-linux64.tar.gz; then
+if ! tar xzf nvim-linux-x86_64.tar.gz; then
     echo "Error: Failed to extract Neovim archive"
     exit 1
 fi
 
 echo "Installing Neovim to /usr/local..."
-sudo rm -rf /usr/local/nvim-linux64
-sudo mv nvim-linux64 /usr/local/
+sudo rm -rf /usr/local/nvim-linux-x86_64
+sudo mv nvim-linux-x86_64 /usr/local/
 
 # Create symlink
 sudo ln -sf /usr/local/nvim-linux64/bin/nvim /usr/local/bin/nvim
