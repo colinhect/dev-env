@@ -18,7 +18,7 @@ $SUDO dnf update -y
 
 # Install development tools
 echo "Installing core development tools..."
-$SUDO dnf groupinstall -y "Development Tools"
+$SUDO dnf group install development-tools
 
 # Install specific packages
 echo "Installing specific development packages..."
