@@ -25,6 +25,7 @@ echo "Installing specific development packages..."
 $SUDO dnf install -y \
     tmux \
     clang \
+    clang-tools-extra \
     gcc \
     gcc-c++ \
     make \
@@ -45,11 +46,27 @@ $SUDO dnf install -y \
     unzip \
     tar \
     gzip \
-    xz
+    xz \
+    gdb
 
 # Install tree-sitter CLI
 echo "Installing tree-sitter CLI..."
 $SUDO npm install -g tree-sitter-cli
+
+# Install pyright for Python LSP
+echo "Installing pyright..."
+$SUDO npm install -g pyright
+
+# Install lazygit
+echo "Installing lazygit..."
+if ! command -v lazygit &> /dev/null; then
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo /tmp/lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    $SUDO tar xf /tmp/lazygit.tar.gz -C /usr/local/bin lazygit
+    rm /tmp/lazygit.tar.gz
+else
+    echo "lazygit already installed, skipping..."
+fi
 
 # Install Python packages for Neovim
 echo "Installing Python packages for Neovim..."

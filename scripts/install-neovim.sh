@@ -11,6 +11,12 @@ if ! command -v dnf &> /dev/null; then
     exit 1
 fi
 
+# Check for curl
+if ! command -v curl &> /dev/null; then
+    echo "Error: curl is required but not installed"
+    exit 1
+fi
+
 # Store original directory
 ORIG_DIR=$(pwd)
 
@@ -22,10 +28,16 @@ echo "Downloading latest Neovim nightly release..."
 
 # Download the latest nightly build
 NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz"
-curl -LO "$NVIM_URL"
+if ! curl -fLO "$NVIM_URL"; then
+    echo "Error: Failed to download Neovim from $NVIM_URL"
+    exit 1
+fi
 
 echo "Extracting Neovim..."
-tar xzf nvim-linux64.tar.gz
+if ! tar xzf nvim-linux64.tar.gz; then
+    echo "Error: Failed to extract Neovim archive"
+    exit 1
+fi
 
 echo "Installing Neovim to /usr/local..."
 sudo rm -rf /usr/local/nvim-linux64
@@ -39,7 +51,10 @@ cd "$ORIG_DIR"
 rm -rf "$TEMP_DIR"
 
 echo "Verifying installation..."
-nvim --version
+if ! nvim --version; then
+    echo "Error: Neovim installation verification failed"
+    exit 1
+fi
 
 echo "Neovim nightly installed successfully!"
 echo "You can run it with: nvim"
