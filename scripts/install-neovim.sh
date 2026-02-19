@@ -11,6 +11,9 @@ if ! command -v dnf &> /dev/null; then
     exit 1
 fi
 
+# Store original directory
+ORIG_DIR=$(pwd)
+
 # Create temporary directory
 TEMP_DIR=$(mktemp -d)
 cd "$TEMP_DIR"
@@ -32,7 +35,7 @@ sudo mv nvim-linux64 /usr/local/
 sudo ln -sf /usr/local/nvim-linux64/bin/nvim /usr/local/bin/nvim
 
 # Clean up
-cd -
+cd "$ORIG_DIR"
 rm -rf "$TEMP_DIR"
 
 echo "Verifying installation..."

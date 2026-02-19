@@ -53,7 +53,11 @@ $SUDO npm install -g tree-sitter-cli
 
 # Install Python packages for Neovim
 echo "Installing Python packages for Neovim..."
-pip3 install --user pynvim
+if [ "$EUID" -eq 0 ]; then
+    pip3 install pynvim
+else
+    pip3 install --user pynvim
+fi
 
 echo "All development dependencies installed successfully!"
 echo ""
