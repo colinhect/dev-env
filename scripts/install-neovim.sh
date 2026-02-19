@@ -43,8 +43,9 @@ echo "Installing Neovim to /usr/local..."
 sudo rm -rf /usr/local/nvim-linux-x86_64
 sudo mv nvim-linux-x86_64 /usr/local/
 
-# Create symlink
-sudo ln -sf /usr/local/nvim-linux64/bin/nvim /usr/local/bin/nvim
+# Create symlink in user's local bin
+mkdir -p "$HOME/.local/bin"
+ln -sf /usr/local/nvim-linux-x86_64/bin/nvim "$HOME/.local/bin/nvim"
 
 # Clean up
 cd "$ORIG_DIR"
