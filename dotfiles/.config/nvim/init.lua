@@ -84,7 +84,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version="main" },
 })
 
-require 'nvim-treesitter'.install { 'python', 'bash', 'rust', 'html', 'xml', 'json', 'yaml', 'javascript', 'c', 'cpp', 'markdown', 'markdown_inline', 'lua', 'diff', 'html', 'yaml',  }
+require 'nvim-treesitter'.install { 'python', 'bash', 'rust', 'html', 'xml', 'json', 'yaml', 'javascript', 'c', 'cpp', 'markdown', 'markdown_inline', 'lua', 'diff', 'html', 'latex', 'yaml',  }
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'markdown_inline', 'copilot-chat', 'python', 'cpp', 'c', 'lua', 'diff', 'rust', 'bash' },
   callback = function() vim.treesitter.start() end,
@@ -394,6 +394,13 @@ vim.pack.add({
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 })
 --:
+
+--: tmux
+vim.pack.add({
+	{ src = "https://github.com/aserowy/tmux.nvim" },
+})
+require("tmux").setup()
+--
 
 local function find_code_section(bufnr, cursor_row)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
