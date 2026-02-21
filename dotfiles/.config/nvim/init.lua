@@ -23,6 +23,7 @@ vim.o.smartcase = true
 vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.autoread = true
+vim.o.timeoutlen = 300
 vim.opt.shortmess:append("I") -- Don't show start-up message
 --:
 

@@ -24,6 +24,7 @@ $SUDO dnf group install development-tools
 echo "Installing specific development packages..."
 $SUDO dnf install -y \
     tmux \
+    zsh \
     clang \
     clang-tools-extra \
     gcc \

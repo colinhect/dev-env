@@ -7,7 +7,7 @@ My personal Linux development environment setup scripts and configuration files.
 This repository contains scripts and dotfiles for quickly setting up a development environment on a fresh Fedora Linux system. It includes:
 
 - **Dotfiles**: Configuration files for bash and tmux
-- **Install Scripts**: Automated installation of Neovim, tmux, and development dependencies
+- **Install Scripts**: Automated installation of Neovim, tmux, Oh My Zsh, opencode, and development dependencies
 - **User Setup**: Script for creating a sudo-enabled SSH user
 
 ## Quick Start
@@ -34,6 +34,7 @@ You can also run individual setup scripts:
 Installs:
 - Development tools (clang, gcc, make, cmake, git)
 - tmux
+- zsh
 - Python 3 + pip + pynvim
 - Node.js + npm
 - tree-sitter CLI
@@ -46,6 +47,20 @@ Installs:
 ```
 
 Downloads and installs the latest Neovim nightly build to `/usr/local`.
+
+#### Install Oh My Zsh Only
+```bash
+./scripts/install-ohmyzsh.sh
+```
+
+Installs Oh My Zsh framework with basic configuration. Requires zsh to be installed first.
+
+#### Install opencode Only
+```bash
+./scripts/install-opencode.sh
+```
+
+Downloads and installs the latest opencode CLI release.
 
 #### Install Dotfiles Only
 ```bash
@@ -90,6 +105,8 @@ Options:
   --skip-deps       Skip installation of dependencies
   --skip-neovim     Skip installation of Neovim
   --skip-dotfiles   Skip installation of dotfiles
+  --skip-ohmyzsh    Skip installation of Oh My Zsh
+  --skip-opencode   Skip installation of opencode
   --help            Show help message
 ```
 
@@ -108,14 +125,24 @@ After running the setup:
    source ~/.bashrc
    ```
 
-2. **Start tmux**:
+2. **(Optional) Set zsh as default shell**:
+   ```bash
+   chsh -s $(which zsh)
+   ```
+
+3. **Start tmux**:
    ```bash
    tmux
    ```
 
-3. **Launch Neovim**:
+4. **Launch Neovim**:
    ```bash
    nvim
+   ```
+
+5. **Launch opencode**:
+   ```bash
+   opencode
    ```
 
 ## License

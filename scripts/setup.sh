@@ -14,6 +14,8 @@ echo ""
 SKIP_DEPS=false
 SKIP_NEOVIM=false
 SKIP_DOTFILES=false
+SKIP_OHMYZSH=false
+SKIP_OPENCODE=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -29,6 +31,14 @@ while [[ $# -gt 0 ]]; do
             SKIP_DOTFILES=true
             shift
             ;;
+        --skip-ohmyzsh)
+            SKIP_OHMYZSH=true
+            shift
+            ;;
+        --skip-opencode)
+            SKIP_OPENCODE=true
+            shift
+            ;;
         --help)
             echo "Usage: $0 [OPTIONS]"
             echo ""
@@ -36,6 +46,8 @@ while [[ $# -gt 0 ]]; do
             echo "  --skip-deps       Skip installation of dependencies"
             echo "  --skip-neovim     Skip installation of Neovim"
             echo "  --skip-dotfiles   Skip installation of dotfiles"
+            echo "  --skip-ohmyzsh    Skip installation of Oh My Zsh"
+            echo "  --skip-opencode   Skip installation of opencode"
             echo "  --help            Show this help message"
             exit 0
             ;;
@@ -77,6 +89,26 @@ else
     echo ""
 fi
 
+# Install Oh My Zsh
+if [ "$SKIP_OHMYZSH" = false ]; then
+    echo "Step 4: Installing Oh My Zsh..."
+    bash "$SCRIPT_DIR/install-ohmyzsh.sh"
+    echo ""
+else
+    echo "Step 4: Skipping Oh My Zsh installation"
+    echo ""
+fi
+
+# Install opencode
+if [ "$SKIP_OPENCODE" = false ]; then
+    echo "Step 5: Installing opencode..."
+    bash "$SCRIPT_DIR/install-opencode.sh"
+    echo ""
+else
+    echo "Step 5: Skipping opencode installation"
+    echo ""
+fi
+
 echo "=========================================="
 echo "Setup Complete!"
 echo "=========================================="
@@ -85,6 +117,8 @@ echo "Your development environment is now configured."
 echo ""
 echo "Next steps:"
 echo "  1. Open a new terminal or run: source ~/.bashrc"
-echo "  2. Start using tmux: tmux"
-echo "  3. Start using Neovim: nvim"
+echo "  2. (Optional) Set zsh as default shell: chsh -s \$(which zsh)"
+echo "  3. Start using tmux: tmux"
+echo "  4. Start using Neovim: nvim"
+echo "  5. Start using opencode: opencode"
 echo ""

@@ -22,6 +22,11 @@ echo "Installing .tmux.conf..."
 backup_if_exists "$HOME/.tmux.conf"
 cp "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 
+# Install .zshrc
+echo "Installing .zshrc..."
+backup_if_exists "$HOME/.zshrc"
+cp "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+
 # Install Neovim configuration
 echo "Installing Neovim configuration..."
 mkdir -p "$HOME/.config/nvim"
@@ -33,5 +38,6 @@ echo "Dotfiles installed successfully!"
 echo ""
 echo "Installed files:"
 echo "  - ~/.tmux.conf"
+echo "  - ~/.zshrc"
 echo "  - ~/.config/nvim/init.lua"
 echo ""
