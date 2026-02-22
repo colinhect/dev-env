@@ -50,11 +50,7 @@ $SUDO dnf install -y \
     xz \
     gdb \
     bat \
-    eza \
-    jq \
     tldr \
-    neofetch \
-    shellcheck \
     golang \
     rust \
     cargo \
