@@ -19,6 +19,14 @@ else
     echo "Oh My Zsh installed successfully!"
 fi
 
+echo "Installing zsh-syntax-highlighting plugin..."
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    echo "zsh-syntax-highlighting installed successfully!"
+else
+    echo "zsh-syntax-highlighting already installed, skipping..."
+fi
+
 chsh -s $(which zsh)
 
 echo ""
