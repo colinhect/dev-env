@@ -109,3 +109,6 @@ SAVEHIST=10000
 
 # Custom aliases
 alias nvim='nvim'
+
+# opencode
+export PATH=/home/colin/.opencode/bin:$PATH
