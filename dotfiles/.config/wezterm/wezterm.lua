@@ -10,4 +10,5 @@ return {
     },
   },
   window_background_opacity = 1.0,
+  window_decorations = 'NONE',
 }
