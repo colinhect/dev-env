@@ -1,90 +1,112 @@
 #!/bin/bash
 # Script to install dotfiles to user's home directory
+# Can install all dotfiles or specific components
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES_DIR="$(dirname "$SCRIPT_DIR")/dotfiles"
+source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/config.sh"
 
-echo "Installing dotfiles..."
+DOTFILES_MODULE_DIR="$SCRIPT_DIR/dotfiles"
 
-# Backup existing dotfiles
-backup_if_exists() {
-    local file="$1"
-    if [ -f "$file" ] || [ -L "$file" ]; then
-        local i=1
-        while [ -e "${file}.backup.${i}" ]; do
-            ((i++))
-        done
-        echo "Backing up existing $file to ${file}.backup.${i}"
-        mv "$file" "${file}.backup.${i}"
-    fi
+show_usage() {
+    echo "Usage: $0 [OPTIONS] [COMPONENTS...]"
+    echo ""
+    echo "Install dotfiles to your home directory."
+    echo ""
+    echo "Components:"
+    echo "  shell         .zshrc"
+    echo "  tmux          .tmux.conf"
+    echo "  nvim          Neovim init.lua"
+    echo "  nvim-nord     Neovim nord colors"
+    echo "  wezterm       Wezterm config"
+    echo "  wezterm-colors Wezterm color schemes"
+    echo "  opencode      Opencode config"
+    echo "  opencode-theme Opencode theme"
+    echo ""
+    echo "Options:"
+    echo "  -a, --all       Install all components (default)"
+    echo "  -l, --list      List available components"
+    echo "  -h, --help      Show this help message"
+    echo "  --dry-run       Show what would be done without making changes"
+    echo ""
+    echo "Examples:"
+    echo "  $0                    # Install all dotfiles"
+    echo "  $0 shell tmux         # Install only shell and tmux configs"
+    echo "  $0 --dry-run nvim     # Preview nvim config installation"
 }
 
-backup_dir_if_exists() {
-    local dir="$1"
-    if [ -d "$dir" ] && [ ! -L "$dir" ]; then
-        local i=1
-        while [ -e "${dir}.backup.${i}" ]; do
-            ((i++))
-        done
-        echo "Backing up existing $dir to ${dir}.backup.${i}"
-        mv "$dir" "${dir}.backup.${i}"
-    fi
+list_components() {
+    echo "Available dotfile components:"
+    echo ""
+    for entry in "${DOTFILE_COMPONENTS[@]}"; do
+        IFS=':' read -r name src dest <<< "$entry"
+        printf "  %-15s %s\n" "$name" "$dest"
+    done
 }
 
-# Install .tmux.conf
-echo "Installing .tmux.conf..."
-backup_if_exists "$HOME/.tmux.conf"
-cp "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+install_component() {
+    local component="$1"
+    local script="$DOTFILES_MODULE_DIR/install-${component}.sh"
+    
+    if [ ! -f "$script" ]; then
+        log_error "Unknown component: $component"
+        return 1
+    fi
+    
+    bash "$script"
+}
 
-# Install .zshrc
-echo "Installing .zshrc..."
-backup_if_exists "$HOME/.zshrc"
-cp "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+parse_args() {
+    INSTALL_ALL=true
+    COMPONENTS=()
+    
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -a|--all)
+                INSTALL_ALL=true
+                shift
+                ;;
+            -l|--list)
+                list_components
+                exit 0
+                ;;
+            -h|--help)
+                show_usage
+                exit 0
+                ;;
+            --dry-run)
+                DRY_RUN=true
+                shift
+                ;;
+            -*)
+                log_error "Unknown option: $1"
+                show_usage
+                exit 1
+                ;;
+            *)
+                COMPONENTS+=("$1")
+                INSTALL_ALL=false
+                shift
+                ;;
+        esac
+    done
+}
 
-# Install Neovim configuration
-echo "Installing Neovim configuration..."
-mkdir -p "$HOME/.config/nvim"
-backup_if_exists "$HOME/.config/nvim/init.lua"
-cp "$DOTFILES_DIR/.config/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+parse_args "$@"
 
-# Install Wezterm configuration
-echo "Installing Wezterm configuration..."
-mkdir -p "$HOME/.config/wezterm"
-backup_if_exists "$HOME/.config/wezterm/wezterm.lua"
-cp "$DOTFILES_DIR/.config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
+log_info "Installing dotfiles..."
 
-# Install Wezterm colors
-echo "Installing Wezterm colors..."
-backup_dir_if_exists "$HOME/.config/wezterm/colors"
-cp -r "$DOTFILES_DIR/.config/wezterm/colors" "$HOME/.config/wezterm/colors"
+if [ "$INSTALL_ALL" = true ]; then
+    for entry in "${DOTFILE_COMPONENTS[@]}"; do
+        IFS=':' read -r name src dest <<< "$entry"
+        install_component "$name"
+    done
+else
+    for component in "${COMPONENTS[@]}"; do
+        install_component "$component"
+    done
+fi
 
-# Install Neovim nord colors
-echo "Installing Neovim nord colors..."
-mkdir -p "$HOME/.local/share/nvim/site/pack/core/opt/nord.nvim/lua/nord"
-backup_if_exists "$HOME/.local/share/nvim/site/pack/core/opt/nord.nvim/lua/nord/named_colors.lua"
-cp "$DOTFILES_DIR/.local/share/nvim/site/pack/core/opt/nord.nvim/lua/nord/named_colors.lua" \
-   "$HOME/.local/share/nvim/site/pack/core/opt/nord.nvim/lua/nord/named_colors.lua"
-
-# Install Opencode configuration
-echo "Installing Opencode configuration..."
-mkdir -p "$HOME/.config/opencode/themes"
-backup_if_exists "$HOME/.config/opencode/opencode.json"
-cp "$DOTFILES_DIR/.config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
-backup_if_exists "$HOME/.config/opencode/themes/nord-custom.json"
-cp "$DOTFILES_DIR/.config/opencode/themes/nord-custom.json" "$HOME/.config/opencode/themes/nord-custom.json"
-
-echo ""
-echo "Dotfiles installed successfully!"
-echo ""
-echo "Installed files:"
-echo "  - ~/.tmux.conf"
-echo "  - ~/.zshrc"
-echo "  - ~/.config/nvim/init.lua"
-echo "  - ~/.config/wezterm/wezterm.lua"
-echo "  - ~/.config/wezterm/colors/"
-echo "  - ~/.local/share/nvim/site/pack/core/opt/nord.nvim/lua/nord/named_colors.lua"
-echo "  - ~/.config/opencode/opencode.json"
-echo "  - ~/.config/opencode/themes/nord-custom.json"
-echo ""
+log_info "Dotfiles installation complete!"

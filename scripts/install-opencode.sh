@@ -3,47 +3,43 @@
 
 set -e
 
-echo "Installing opencode..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/config.sh"
 
-if command -v opencode &> /dev/null; then
-    echo "opencode already installed, skipping..."
+log_info "Installing opencode..."
+
+if command_exists opencode; then
+    log_info "opencode already installed, skipping..."
     exit 0
 fi
 
-if ! command -v curl &> /dev/null; then
-    echo "Error: curl is required but not installed"
+require_command curl "curl is required. Run install-dependencies.sh first."
+
+ARCH=$(get_arch)
+OPENCODE_URL="${OPENCODE_URL_BASE}/opencode-linux-${ARCH}"
+
+log_step "Detecting system architecture: $ARCH"
+
+TEMP_DIR=$(create_temp_dir)
+
+log_step "Downloading opencode..."
+if ! download_file "$OPENCODE_URL" "$TEMP_DIR/opencode"; then
+    log_error "Failed to download opencode"
+    cleanup_temp "$TEMP_DIR"
     exit 1
 fi
 
-echo "Detecting system architecture..."
-ARCH=$(uname -m)
-case $ARCH in
-    x86_64)
-        BINARY_ARCH="x86_64"
-        ;;
-    aarch64|arm64)
-        BINARY_ARCH="aarch64"
-        ;;
-    *)
-        echo "Error: Unsupported architecture: $ARCH"
-        exit 1
-        ;;
-esac
+log_step "Installing opencode to /usr/local/bin..."
+SUDO=$(get_sudo)
+maybe_run $SUDO install -m 755 "$TEMP_DIR/opencode" /usr/local/bin/opencode
 
-echo "Downloading opencode for $BINARY_ARCH..."
-OPENCODE_URL="https://github.com/opencode-ai/opencode/releases/latest/download/opencode-linux-${BINARY_ARCH}"
+cleanup_temp "$TEMP_DIR"
 
-TEMP_DIR=$(mktemp -d)
-curl -fLo "$TEMP_DIR/opencode" "$OPENCODE_URL"
+log_step "Verifying installation..."
+if [ "$DRY_RUN" != "true" ]; then
+    opencode --version
+fi
 
-echo "Installing opencode to /usr/local/bin..."
-sudo install -m 755 "$TEMP_DIR/opencode" /usr/local/bin/opencode
-
-rm -rf "$TEMP_DIR"
-
-echo "Verifying installation..."
-opencode --version
-
-echo ""
-echo "opencode installed successfully!"
-echo "Run it with: opencode"
+log_info "opencode installed successfully!"
+log_info "Run it with: opencode"

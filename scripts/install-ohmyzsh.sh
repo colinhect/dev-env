@@ -3,52 +3,37 @@
 
 set -e
 
-echo "Installing Oh My Zsh..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/config.sh"
 
-if ! command -v zsh &> /dev/null; then
-    echo "Error: zsh is not installed. Run install-dependencies.sh first."
-    exit 1
-fi
+log_info "Installing Oh My Zsh..."
+
+require_command zsh "zsh is not installed. Run install-dependencies.sh first."
 
 if [ -d "$HOME/.oh-my-zsh" ]; then
-    echo "Oh My Zsh already installed, skipping..."
+    log_info "Oh My Zsh already installed, skipping..."
 else
-    echo "Installing Oh My Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    log_step "Installing Oh My Zsh..."
+    maybe_run sh -c "$(curl -fsSL $OHMYZSH_INSTALL_URL)" "" --unattended
+fi
+
+for plugin_entry in "${OHMYZSH_PLUGINS[@]}"; do
+    IFS=':' read -r plugin_name plugin_url <<< "$plugin_entry"
+    plugin_path="$HOME/.oh-my-zsh/custom/plugins/$plugin_name"
     
-    echo "Oh My Zsh installed successfully!"
+    log_step "Installing $plugin_name plugin..."
+    if [ ! -d "$plugin_path" ]; then
+        maybe_run git clone "$plugin_url" "$plugin_path"
+    else
+        log_info "$plugin_name already installed, skipping..."
+    fi
+done
+
+log_step "Setting zsh as default shell..."
+if [ "$DRY_RUN" != "true" ]; then
+    chsh -s "$(which zsh)"
 fi
 
-echo "Installing zsh-syntax-highlighting plugin..."
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
-    echo "zsh-syntax-highlighting installed successfully!"
-else
-    echo "zsh-syntax-highlighting already installed, skipping..."
-fi
-
-echo "Installing zsh-autosuggestions plugin..."
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-    echo "zsh-autosuggestions installed successfully!"
-else
-    echo "zsh-autosuggestions already installed, skipping..."
-fi
-
-echo "Installing zsh-completions plugin..."
-if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-completions" ]; then
-    git clone https://github.com/zsh-users/zsh-completions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-completions"
-    echo "zsh-completions installed successfully!"
-else
-    echo "zsh-completions already installed, skipping..."
-fi
-
-chsh -s $(which zsh)
-
-echo ""
-echo "Oh My Zsh setup complete!"
-echo ""
-echo "To use zsh as your default shell, run:"
-echo "  chsh -s \$(which zsh)"
-echo ""
-echo "Or start zsh manually with: zsh"
+log_info "Oh My Zsh setup complete!"
+log_info "Open a new terminal or run: zsh"

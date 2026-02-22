@@ -3,59 +3,47 @@
 
 set -e
 
-echo "Installing Neovim development release..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/config.sh"
 
-# Check if running on Fedora/RHEL
-if ! command -v dnf &> /dev/null; then
-    echo "Error: This script is designed for Fedora/RHEL systems with dnf"
-    exit 1
-fi
+log_info "Installing Neovim development release..."
 
-# Check for curl
-if ! command -v curl &> /dev/null; then
-    echo "Error: curl is required but not installed"
-    exit 1
-fi
+require_command curl "curl is required. Run install-dependencies.sh first."
 
-# Store original directory
 ORIG_DIR=$(pwd)
+TEMP_DIR=$(create_temp_dir)
 
-# Create temporary directory
-TEMP_DIR=$(mktemp -d)
+log_step "Downloading Neovim nightly..."
 cd "$TEMP_DIR"
 
-echo "Downloading latest Neovim nightly release..."
-
-# Download the latest nightly build
-NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
-if ! curl -fLO "$NVIM_URL"; then
-    echo "Error: Failed to download Neovim from $NVIM_URL"
+if ! download_file "$NVIM_URL" "nvim.tar.gz"; then
+    log_error "Failed to download Neovim"
+    cleanup_temp "$TEMP_DIR"
     exit 1
 fi
 
-echo "Extracting Neovim..."
-if ! tar xzf nvim-linux-x86_64.tar.gz; then
-    echo "Error: Failed to extract Neovim archive"
-    exit 1
-fi
+log_step "Extracting Neovim..."
+maybe_run tar xzf nvim.tar.gz
 
-echo "Installing Neovim to /usr/local..."
-sudo rm -rf /usr/local/nvim-linux-x86_64
-sudo mv nvim-linux-x86_64 /usr/local/
+log_step "Installing Neovim to /usr/local..."
+SUDO=$(get_sudo)
+maybe_run $SUDO rm -rf "$NVIM_INSTALL_DIR"
+maybe_run $SUDO mv nvim-linux-x86_64 /usr/local/
 
-# Create symlink in user's local bin
-mkdir -p "$HOME/.local/bin"
-ln -sf /usr/local/nvim-linux-x86_64/bin/nvim "$HOME/.local/bin/nvim"
+ensure_dir "$LOCAL_BIN"
+maybe_run ln -sf "$NVIM_INSTALL_DIR/bin/nvim" "$LOCAL_BIN/nvim"
 
-# Clean up
 cd "$ORIG_DIR"
-rm -rf "$TEMP_DIR"
+cleanup_temp "$TEMP_DIR"
 
-echo "Verifying installation..."
-if ! nvim --version; then
-    echo "Error: Neovim installation verification failed"
-    exit 1
+log_step "Verifying installation..."
+if [ "$DRY_RUN" != "true" ]; then
+    if ! nvim --version; then
+        log_error "Neovim installation verification failed"
+        exit 1
+    fi
 fi
 
-echo "Neovim nightly installed successfully!"
-echo "You can run it with: nvim"
+log_info "Neovim nightly installed successfully!"
+log_info "You can run it with: nvim"

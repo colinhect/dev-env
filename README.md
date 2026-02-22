@@ -1,20 +1,8 @@
-# dev-env
+# Development Environment
 
-My personal Linux development environment setup scripts and configuration files.
-
-## Overview
-
-This repository contains scripts and dotfiles for quickly setting up a development environment on a fresh Fedora Linux system. It includes:
-
-- **Dotfiles**: Configuration files for bash and tmux
-- **Install Scripts**: Automated installation of Neovim, tmux, Oh My Zsh, opencode, and development dependencies
-- **User Setup**: Script for creating a sudo-enabled SSH user
+My personal Linux development environment setup for Fedora.
 
 ## Quick Start
-
-### Full Setup (All Components)
-
-To set up everything in one go:
 
 ```bash
 git clone https://github.com/colinhect/dev-env.git
@@ -22,128 +10,134 @@ cd dev-env
 ./scripts/setup.sh
 ```
 
-### Individual Components
+## Setup Script
 
-You can also run individual setup scripts:
+The main setup script installs all components by default.
 
-#### Install Dependencies Only
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-c, --check` | Check what's installed without making changes |
+| `-d, --dry-run` | Preview actions without making changes |
+| `--only COMPONENTS` | Run only specified components (comma-separated) |
+| `--skip COMPONENT` | Skip a specific component |
+| `-l, --list` | List available components |
+| `-h, --help` | Show help message |
+
+### Examples
+
 ```bash
-./scripts/install-dependencies.sh
+./scripts/setup.sh                          # Install everything
+./scripts/setup.sh --check                  # Check installation status
+./scripts/setup.sh --dry-run                # Preview all actions
+./scripts/setup.sh --only neovim,dotfiles   # Install only neovim and dotfiles
+./scripts/setup.sh --skip deps              # Skip dependency installation
 ```
 
-Installs:
-- Development tools (clang, gcc, make, cmake, git)
-- tmux
-- zsh
-- Python 3 + pip + pynvim
-- Node.js + npm
-- tree-sitter CLI
-- ripgrep, fd-find, fzf
-- Various utilities (htop, tree, wget, curl, etc.)
+## Components
 
-#### Install Neovim Only
+| Component | Description |
+|-----------|-------------|
+| `deps` | System packages (clang, gcc, nodejs, ripgrep, etc.) |
+| `neovim` | Neovim nightly build |
+| `dotfiles` | Configuration files |
+| `ohmyzsh` | Oh My Zsh + plugins |
+| `opencode` | opencode CLI |
+| `fonts` | AdwaitaMono font |
+
+## Individual Scripts
+
+Each component can be run independently:
+
 ```bash
-./scripts/install-neovim.sh
+./scripts/install-dependencies.sh    # System packages
+./scripts/install-neovim.sh          # Neovim nightly
+./scripts/install-ohmyzsh.sh         # Oh My Zsh + plugins
+./scripts/install-opencode.sh        # opencode CLI
+./scripts/install-dotfiles.sh        # Configuration files
+./scripts/setup-user.sh [username]   # Create new sudo user (run as root)
 ```
-
-Downloads and installs the latest Neovim nightly build to `/usr/local`.
-
-#### Install Oh My Zsh Only
-```bash
-./scripts/install-ohmyzsh.sh
-```
-
-Installs Oh My Zsh framework with basic configuration. Requires zsh to be installed first.
-
-#### Install opencode Only
-```bash
-./scripts/install-opencode.sh
-```
-
-Downloads and installs the latest opencode CLI release.
-
-#### Install Dotfiles Only
-```bash
-./scripts/install-dotfiles.sh
-```
-
-Copies dotfiles to your home directory (backs up existing files).
-
-#### Setup a New User (For Fresh Systems)
-```bash
-sudo ./scripts/setup-user.sh [username]
-```
-
-Creates a new user with:
-- Sudo access (added to wheel group)
-- SSH directory configured
-- Home directory with proper permissions
 
 ## Dotfiles
 
-### .bashrc
-- Custom aliases (ll, la, git shortcuts)
-- Colored prompt
-- History settings
-- Sets nvim as default editor
-
-### .tmux.conf
-- Prefix changed to Ctrl-a
-- Intuitive pane splitting (| and -)
-- Mouse support
-- Vi mode for copy mode
-- Custom status bar
-
-## Options
-
-The main setup script supports these options:
+Install specific dotfiles:
 
 ```bash
-./scripts/setup.sh [OPTIONS]
+./scripts/install-dotfiles.sh                  # All dotfiles
+./scripts/install-dotfiles.sh shell tmux       # Only shell and tmux
+./scripts/install-dotfiles.sh --dry-run nvim   # Preview nvim install
+./scripts/install-dotfiles.sh --list           # List components
+```
 
-Options:
-  --skip-deps       Skip installation of dependencies
-  --skip-neovim     Skip installation of Neovim
-  --skip-dotfiles   Skip installation of dotfiles
-  --skip-ohmyzsh    Skip installation of Oh My Zsh
-  --skip-opencode   Skip installation of opencode
-  --help            Show help message
+### Available Dotfiles
+
+| Component | Destination |
+|-----------|-------------|
+| `shell` | `~/.zshrc` |
+| `tmux` | `~/.tmux.conf` |
+| `nvim` | `~/.config/nvim/init.lua` |
+| `nvim-nord` | `~/.local/share/nvim/site/pack/core/opt/nord.nvim/` |
+| `wezterm` | `~/.config/wezterm/wezterm.lua` |
+| `wezterm-colors` | `~/.config/wezterm/colors/` |
+| `opencode` | `~/.config/opencode/opencode.json` |
+| `opencode-theme` | `~/.config/opencode/themes/nord-custom.json` |
+
+### Dotfile Modules
+
+Each dotfile has its own install script in `scripts/dotfiles/`:
+
+```bash
+./scripts/dotfiles/install-shell.sh
+./scripts/dotfiles/install-nvim.sh
+./scripts/dotfiles/install-tmux.sh
+# ... etc
 ```
 
 ## Requirements
 
-- Fedora Linux (or RHEL-based distribution with dnf)
+- Fedora Linux (or RHEL-based distro with dnf)
 - Internet connection
-- Sudo access for system-wide installations
+- Sudo access
 
 ## Post-Installation
 
-After running the setup:
+```bash
+source ~/.zshrc      # Reload shell config
+tmux                 # Start tmux
+nvim                 # Start Neovim
+opencode             # Start opencode
+```
 
-1. **Reload shell configuration**:
-   ```bash
-   source ~/.bashrc
-   ```
+## Directory Structure
 
-2. **(Optional) Set zsh as default shell**:
-   ```bash
-   chsh -s $(which zsh)
-   ```
-
-3. **Start tmux**:
-   ```bash
-   tmux
-   ```
-
-4. **Launch Neovim**:
-   ```bash
-   nvim
-   ```
-
-5. **Launch opencode**:
-   ```bash
-   opencode
-   ```
+```
+dev-env/
+├── scripts/
+│   ├── lib/
+│   │   └── common.sh           # Shared functions
+│   ├── dotfiles/
+│   │   ├── install-shell.sh
+│   │   ├── install-nvim.sh
+│   │   └── ...
+│   ├── config.sh               # Centralized config
+│   ├── setup.sh                # Main orchestrator
+│   ├── install-dependencies.sh
+│   ├── install-neovim.sh
+│   ├── install-ohmyzsh.sh
+│   ├── install-opencode.sh
+│   ├── install-dotfiles.sh
+│   └── setup-user.sh
+├── dotfiles/
+│   ├── .zshrc
+│   ├── .tmux.conf
+│   └── .config/
+│       ├── nvim/
+│       ├── wezterm/
+│       └── opencode/
+└── fonts/
+    └── install.sh
+```
 
 ## License
 
