@@ -1,8 +1,11 @@
 local wezterm = require 'wezterm'
 local nord = require 'colors/nord'
 
+local act = wezterm.action
+
 return {
   font = wezterm.font 'AdwaitaMono Nerd Font',
+  colors = nord.colors,
   window_decorations = 'NONE',
   keys = {
     {key = '1', mods = 'CTRL|ALT', action = act.ActivateTab(0)},

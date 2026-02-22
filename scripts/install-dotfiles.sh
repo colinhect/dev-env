@@ -12,16 +12,24 @@ echo "Installing dotfiles..."
 backup_if_exists() {
     local file="$1"
     if [ -f "$file" ] || [ -L "$file" ]; then
-        echo "Backing up existing $file to ${file}.backup"
-        mv "$file" "${file}.backup"
+        local i=1
+        while [ -e "${file}.backup.${i}" ]; do
+            ((i++))
+        done
+        echo "Backing up existing $file to ${file}.backup.${i}"
+        mv "$file" "${file}.backup.${i}"
     fi
 }
 
 backup_dir_if_exists() {
     local dir="$1"
     if [ -d "$dir" ] && [ ! -L "$dir" ]; then
-        echo "Backing up existing $dir to ${dir}.backup"
-        mv "$dir" "${dir}.backup"
+        local i=1
+        while [ -e "${dir}.backup.${i}" ]; do
+            ((i++))
+        done
+        echo "Backing up existing $dir to ${dir}.backup.${i}"
+        mv "$dir" "${dir}.backup.${i}"
     fi
 }
 
