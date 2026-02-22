@@ -1,0 +1,235 @@
+{
+  "$schema": "https://opencode.ai/theme.json",
+  "defs": {
+    "bg": "#121213",
+    "fg": "#ECEFF4",
+    "black": "#07080A",
+    "dark_gray": "#3B4252",
+    "gray": "#434C5E",
+    "light_gray": "#4C566A",
+    "light_gray_bright": "#616E88",
+    "red": "#B48EAD",
+    "green": "#738eb0",
+    "yellow": "#8FBCBB",
+    "blue": "#5E81AC",
+    "magenta": "#82b97c",
+    "cyan": "#8FBCBB",
+    "white": "#E5E9F0",
+    "darkest_white": "#D8DEE9",
+    "teal": "#8FBCBB",
+    "off_blue": "#88C0D0",
+    "glacier": "#81A1C1",
+    "orange": "#D08770",
+    "purple": "#B48EAD",
+    "bright_black": "#4C566A",
+    "bright_red": "#BF616A",
+    "bright_green": "#A3BE8C",
+    "bright_yellow": "#EBCB8B",
+    "bright_blue": "#5E81AC",
+    "bright_magenta": "#B48EAD",
+    "bright_cyan": "#8FBCBB",
+    "bright_white": "#ECEFF4"
+  },
+  "theme": {
+    "primary": {
+      "dark": "off_blue",
+      "light": "blue"
+    },
+    "secondary": {
+      "dark": "glacier",
+      "light": "glacier"
+    },
+    "accent": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "error": {
+      "dark": "bright_red",
+      "light": "bright_red"
+    },
+    "warning": {
+      "dark": "orange",
+      "light": "orange"
+    },
+    "success": {
+      "dark": "bright_green",
+      "light": "bright_green"
+    },
+    "info": {
+      "dark": "off_blue",
+      "light": "blue"
+    },
+    "text": {
+      "dark": "fg",
+      "light": "black"
+    },
+    "textMuted": {
+      "dark": "light_gray",
+      "light": "dark_gray"
+    },
+    "background": {
+      "dark": "bg",
+      "light": "fg"
+    },
+    "backgroundPanel": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "backgroundElement": {
+      "dark": "dark_gray",
+      "light": "darkest_white"
+    },
+    "border": {
+      "dark": "gray",
+      "light": "light_gray"
+    },
+    "borderActive": {
+      "dark": "light_gray",
+      "light": "gray"
+    },
+    "borderSubtle": {
+      "dark": "gray",
+      "light": "light_gray"
+    },
+    "diffAdded": {
+      "dark": "bright_green",
+      "light": "bright_green"
+    },
+    "diffRemoved": {
+      "dark": "bright_red",
+      "light": "bright_red"
+    },
+    "diffContext": {
+      "dark": "light_gray",
+      "light": "light_gray"
+    },
+    "diffHunkHeader": {
+      "dark": "light_gray",
+      "light": "light_gray"
+    },
+    "diffHighlightAdded": {
+      "dark": "bright_green",
+      "light": "bright_green"
+    },
+    "diffHighlightRemoved": {
+      "dark": "bright_red",
+      "light": "bright_red"
+    },
+    "diffAddedBg": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "diffRemovedBg": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "diffContextBg": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "diffLineNumber": {
+      "dark": "gray",
+      "light": "darkest_white"
+    },
+    "diffAddedLineNumberBg": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "diffRemovedLineNumberBg": {
+      "dark": "dark_gray",
+      "light": "white"
+    },
+    "markdownText": {
+      "dark": "fg",
+      "light": "black"
+    },
+    "markdownHeading": {
+      "dark": "off_blue",
+      "light": "blue"
+    },
+    "markdownLink": {
+      "dark": "glacier",
+      "light": "glacier"
+    },
+    "markdownLinkText": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "markdownCode": {
+      "dark": "bright_green",
+      "light": "bright_green"
+    },
+    "markdownBlockQuote": {
+      "dark": "light_gray",
+      "light": "light_gray"
+    },
+    "markdownEmph": {
+      "dark": "orange",
+      "light": "orange"
+    },
+    "markdownStrong": {
+      "dark": "bright_yellow",
+      "light": "bright_yellow"
+    },
+    "markdownHorizontalRule": {
+      "dark": "light_gray",
+      "light": "light_gray"
+    },
+    "markdownListItem": {
+      "dark": "off_blue",
+      "light": "blue"
+    },
+    "markdownListEnumeration": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "markdownImage": {
+      "dark": "glacier",
+      "light": "glacier"
+    },
+    "markdownImageText": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "markdownCodeBlock": {
+      "dark": "fg",
+      "light": "black"
+    },
+    "syntaxComment": {
+      "dark": "light_gray",
+      "light": "light_gray"
+    },
+    "syntaxKeyword": {
+      "dark": "glacier",
+      "light": "glacier"
+    },
+    "syntaxFunction": {
+      "dark": "off_blue",
+      "light": "off_blue"
+    },
+    "syntaxVariable": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "syntaxString": {
+      "dark": "bright_green",
+      "light": "bright_green"
+    },
+    "syntaxNumber": {
+      "dark": "purple",
+      "light": "purple"
+    },
+    "syntaxType": {
+      "dark": "cyan",
+      "light": "cyan"
+    },
+    "syntaxOperator": {
+      "dark": "glacier",
+      "light": "glacier"
+    },
+    "syntaxPunctuation": {
+      "dark": "fg",
+      "light": "black"
+    }
+  }
+}

@@ -365,7 +365,7 @@ vim.keymap.set('n', '<leader>gg', ":LazyGit<CR>", { desc = 'LazyGit' })
 vim.keymap.set('n', '<leader>gf', ":LazyGitFilterCurrentFile<CR>", { desc = 'LazyGit Current File' })
 vim.keymap.set('n', '<leader>gl', ":LazyGitLog<CR>", { desc = 'LazyGit Log' })
 vim.keymap.set('n', '<leader>gb', ":Git blame<CR>", { desc = 'Git Blame Current File' })
-vim.keymap.set('n', '<leader>gd', ":Gdiffsplit<CR>", { desc = 'Git Diff Current File' })
+vim.keymap.set('n', '<leader>gd', ":Gvdiffsplit<CR>", { desc = 'Git Diff Current File' })
 --:
 
 --: lualine

@@ -75,12 +75,12 @@ else
     echo "lazygit already installed, skipping..."
 fi
 
-# Install Python packages for Neovim
-echo "Installing Python packages for Neovim..."
-if [ "$EUID" -eq 0 ]; then
-    pip3 install pynvim
-else
-    pip3 install --user pynvim
-fi
+echo "Installing Python packages..."
+pip3 install toad
+#if [ "$EUID" -eq 0 ]; then
+    #pip3 install pynvim
+#else
+    #pip3 install --user pynvim
+#fi
 
 echo "All development dependencies installed successfully!"
