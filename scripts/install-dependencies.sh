@@ -48,7 +48,17 @@ $SUDO dnf install -y \
     tar \
     gzip \
     xz \
-    gdb
+    gdb \
+    bat \
+    eza \
+    jq \
+    tldr \
+    neofetch \
+    shellcheck \
+    golang \
+    rust \
+    cargo \
+    git-delta
 
 # Install tree-sitter CLI
 echo "Installing tree-sitter CLI..."

@@ -27,6 +27,22 @@ else
     echo "zsh-syntax-highlighting already installed, skipping..."
 fi
 
+echo "Installing zsh-autosuggestions plugin..."
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    echo "zsh-autosuggestions installed successfully!"
+else
+    echo "zsh-autosuggestions already installed, skipping..."
+fi
+
+echo "Installing zsh-completions plugin..."
+if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-completions" ]; then
+    git clone https://github.com/zsh-users/zsh-completions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-completions"
+    echo "zsh-completions installed successfully!"
+else
+    echo "zsh-completions already installed, skipping..."
+fi
+
 chsh -s $(which zsh)
 
 echo ""
