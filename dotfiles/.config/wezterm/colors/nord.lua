@@ -2,36 +2,38 @@ local wezterm = require 'wezterm'
 
 return {
   colors = {
-    foreground = '#ECEFF4',
-    background = '#121213',
+    foreground = "#DBDEE5",
+    background = "#181818",
 
-    cursor_bg = '#D8DEE9',
-    cursor_fg = '#2E3440',
-    cursor_border = '#D8DEE9',
+    cursor_bg = "#DBDEE5",
+    cursor_fg = "#181818",
+    cursor_border = "#DBDEE5",
 
-    selection_fg = '#ECEFF4',
-    selection_bg = '#434C5E',
+    selection_fg = "#181818",
+    selection_bg = "#6C717C",
+
+    scrollbar_thumb = "#42444A",
+    split = "#42444A",
 
     ansi = {
-      '#07080A',
-      '#82b97c',
-      '#779ecd',
-      '#8FBCBB',
-      '#5E81AC',
-      '#B48EAD',
-      '#8FBCBB',
-      '#E5E9F0',
+        "#181818", -- black
+        "#B36C72", -- red
+        "#A3B495", -- green
+        "#E4C891", -- yellow
+        "#6A829F", -- blue
+        "#AA97A7", -- purple
+        "#97B3B2", -- teal
+        "#DBDEE5", -- darkest_white
     },
-
     brights = {
-      '#4C566A',
-      '#BF616A',
-      '#A3BE8C',
-      '#EBCB8B',
-      '#5E81AC',
-      '#B48EAD',
-      '#8FBCBB',
-      '#ECEFF4',
+        "#6C717C", -- light_gray_bright
+        "#B36C72", -- red (bright)
+        "#A3B495", -- green (bright)
+        "#E4C891", -- yellow (bright)
+        "#90BBC7", -- off_blue
+        "#AA97A7", -- purple (bright)
+        "#8AA0B7", -- glacier
+        "#EDEFF2", -- white
     },
   },
 }
