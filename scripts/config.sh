@@ -24,6 +24,7 @@ CORE_PACKAGES=(
     python3-devel
     nodejs
     npm
+    ranger
 )
 
 DEV_PACKAGES=(

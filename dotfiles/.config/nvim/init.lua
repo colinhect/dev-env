@@ -106,7 +106,7 @@ tsc.setup{
 function toggle_treesitter_context()
     tsc.toggle()
 end
-vim.keymap.set({'n', 'i'}, "<leader>ut", toggle_treesitter_context, { desc = "Toggle Treesitter Context" })
+vim.keymap.set('n', "<leader>ut", toggle_treesitter_context, { desc = "Toggle Treesitter Context" })
 --:
 
 --: nvim-tree
