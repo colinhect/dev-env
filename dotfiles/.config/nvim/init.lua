@@ -189,7 +189,7 @@ vim.keymap.set("n", "<leader>ld", function() vim.lsp.buf.definition() end, { des
 vim.keymap.set("n", "<leader>lt", function() vim.lsp.buf.type_definition() end, { desc = "Go To Type Definition (LSP)", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>li", function() vim.lsp.buf.implementation() end, { desc = "Go To Implementation (LSP)", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, { desc = "Find References (LSP)", noremap = true, silent = true })
-vim.keymap.set("n", "<leader>ln", function() vim.lsp.buf.rename() end, { desc = "Find References (LSP)", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ln", function() vim.lsp.buf.rename() end, { desc = "Rename Symbol (LSP)", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>ls", function() vim.lsp.buf.hover() end, { desc = "Show Symbol Info (LSP)", noremap = true, silent = true })
 vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format() end, { desc = "Format (LSP)", noremap = true, silent = true })
 
