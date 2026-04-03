@@ -62,7 +62,7 @@ PYTHON_PACKAGES=(
 )
 
 # URLs for downloads
-NVIM_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
+NVIM_URL="https://github.com/neovim/neovim/releases/download/v0.12.0/nvim-linux-x86_64.tar.gz"
 NVIM_INSTALL_DIR="/usr/local/nvim-linux-x86_64"
 
 OPENCODE_URL_BASE="https://github.com/opencode-ai/opencode/releases/latest/download"

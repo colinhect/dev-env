@@ -14,7 +14,7 @@ require_command curl "curl is required. Run install-dependencies.sh first."
 ORIG_DIR=$(pwd)
 TEMP_DIR=$(create_temp_dir)
 
-log_step "Downloading Neovim nightly..."
+log_step "Downloading Neovim stable release..."
 cd "$TEMP_DIR"
 
 if ! download_file "$NVIM_URL" "nvim.tar.gz"; then
