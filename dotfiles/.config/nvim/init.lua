@@ -333,7 +333,12 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 --:
 
-vim.keymap.set('n', '<leader>ar', ":vsplit|term artifice --full<CR>", { desc = 'Artifice' })
+--: Copilot
+vim.pack.add({
+    { src = "https://github.com/zbirenbaum/copilot.lua" },
+})
+require("copilot").setup()
+--
 
 --: diffview
 vim.pack.add({
