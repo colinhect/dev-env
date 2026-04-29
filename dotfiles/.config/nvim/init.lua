@@ -194,6 +194,7 @@ vim.keymap.set("n", "<leader>ls", function() vim.lsp.buf.hover() end, { desc = "
 vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format() end, { desc = "Format (LSP)", noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>ch", ":LspClangdSwitchSourceHeader<CR>", { desc = "Switch To Header/Source File", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, { desc = "Code Action", noremap = true, silent = true })
 --:
 
 --: nvim-lspconfig
