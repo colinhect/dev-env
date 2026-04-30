@@ -43,8 +43,9 @@ vim.keymap.set('', '<C-k>', '<C-w>k', { noremap = true })
 vim.keymap.set('', '<C-l>', '<C-w>l', { noremap = true })
 
 vim.keymap.set('v', '<C-c>', '"+y')
-vim.api.nvim_set_keymap("n", "<C-c>", [[:lua vim.fn.setreg('+', vim.fn.getline('.'))<CR>]],
-	{ noremap = true, silent = true })
+vim.keymap.set('n', '<C-c>', function()
+  vim.fn.setreg('+', vim.fn.getline('.'))
+end, { noremap = true, desc = 'Copy Current Line to Clipboard' })
 --:
 
 --: nord
@@ -85,7 +86,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version="main" },
 })
 
-require 'nvim-treesitter'.install { 'python', 'bash', 'rust', 'html', 'xml', 'json', 'yaml', 'javascript', 'c', 'cpp', 'markdown', 'markdown_inline', 'lua', 'diff', 'html', 'latex', 'yaml',  }
+require 'nvim-treesitter'.install { 'python', 'bash', 'rust', 'html', 'xml', 'json', 'yaml', 'javascript', 'c', 'cpp', 'markdown', 'markdown_inline', 'lua', 'diff', 'latex' }
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'markdown_inline', 'copilot-chat', 'python', 'cpp', 'c', 'lua', 'diff', 'rust', 'bash' },
   callback = function() vim.treesitter.start() end,
@@ -338,7 +339,12 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.pack.add({
     { src = "https://github.com/zbirenbaum/copilot.lua" },
 })
-require("copilot").setup()
+require("copilot").setup {
+    suggestion = {
+        enabled = true,
+        auto_trigger = true,
+    }
+}
 --
 
 --: diffview
