@@ -132,7 +132,7 @@ require("nvim-tree").setup({
 
 --: blink.cmp
 vim.pack.add({
-	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.9.1" },
+	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.10.2" },
 })
 require("blink.cmp").setup({
 	keymap = { preset = 'default' },
@@ -343,6 +343,9 @@ require("copilot").setup {
     suggestion = {
         enabled = true,
         auto_trigger = true,
+        keymap = {
+            accept = "<M-y>",
+        },
     }
 }
 --
