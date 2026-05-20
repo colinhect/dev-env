@@ -212,7 +212,12 @@ vim.lsp.config.clangd = {
   root_markers = { '.clangd', 'compile_commands.json' },
   filetypes = { 'c', 'cpp' },
 }
-vim.lsp.enable({"clangd", "pyright"})
+vim.lsp.config.rust_analyzer = {
+  cmd = { 'rust-analyzer' },
+  root_markers = { 'Cargo.toml', 'Cargo.lock' },
+  filetypes = { 'rust' },
+}
+vim.lsp.enable({"clangd", "pyright", "rust_analyzer"})
 --:
 
 --: tiny-inline-diagnostic
